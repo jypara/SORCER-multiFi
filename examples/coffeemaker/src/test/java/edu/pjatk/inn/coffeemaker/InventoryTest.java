@@ -40,7 +40,7 @@ public class InventoryTest {
 
         mocha = new Recipe();
         mocha.setName("mocha");
-        mocha.setPrice(100);
+        mocha.setPrice(50);
         mocha.setAmtCoffee(8);
         mocha.setAmtMilk(1);
         mocha.setAmtSugar(1);
@@ -64,37 +64,40 @@ public class InventoryTest {
     }
 
 
+  // All tests run good after fixing bug in CoffeeMaker test 
     @Test
     public void AddInventory(){
-        inventory.setChocolate(50);
-        inventory.setCoffee(50);
-        inventory.setSugar(50);
-        inventory.setMilk(50);
-        assertEquals(coffeeMaker.checkInventory().getChocolate(), 50);
-        assertEquals(coffeeMaker.checkInventory().getCoffee(), 50);
-        assertEquals(coffeeMaker.checkInventory().getSugar(), 50);
-        assertEquals(coffeeMaker.checkInventory().getMilk(), 50);
+        inventory.setChocolate(100);
+        inventory.setCoffee(100);
+        inventory.setSugar(100);
+        inventory.setMilk(100);
+        assertEquals(coffeeMaker.checkInventory().getChocolate(), 100);
+        assertEquals(coffeeMaker.checkInventory().getCoffee(), 100);
+        assertEquals(coffeeMaker.checkInventory().getSugar(), 100);
+        assertEquals(coffeeMaker.checkInventory().getMilk(), 100);
 
         coffeeMaker.makeCoffee(mocha, 50);
-        assertEquals(coffeeMaker.checkInventory().getChocolate(), 50-mocha.getAmtChocolate());
+        assertEquals(coffeeMaker.checkInventory().getChocolate(), 100-mocha.getAmtChocolate()); // fixed bug inventory decreased after making purchase
 
 
         inventory.setChocolate(0);
-        assertEquals(coffeeMaker.checkInventory().getChocolate(), 50);
+        assertEquals(coffeeMaker.checkInventory().getChocolate(), 100);
     }
 
 
     @Test
     public void CheckInventory(){
 
-        inventory.setChocolate(50);
-        inventory.setCoffee(50);
-        inventory.setSugar(50);
-        inventory.setMilk(50);
-        assertEquals(coffeeMaker.checkInventory().getChocolate(), 50);
-        assertEquals(coffeeMaker.checkInventory().getCoffee(), 50);
-        assertEquals(coffeeMaker.checkInventory().getSugar(), 50);
-        assertEquals(coffeeMaker.checkInventory().getMilk(), 50);
+        inventory.setChocolate(100);
+        inventory.setCoffee(100);
+        inventory.setSugar(100);
+        inventory.setMilk(100);
+        assertEquals(coffeeMaker.checkInventory().getChocolate(), 100);
+        assertEquals(coffeeMaker.checkInventory().getCoffee(), 100);
+        assertEquals(coffeeMaker.checkInventory().getSugar(), 100);
+        assertEquals(coffeeMaker.checkInventory().getMilk(), 100);
+
+        //all tests passed successfully
     }
 
 
@@ -110,12 +113,14 @@ public class InventoryTest {
         assertFalse(coffeeMaker.checkInventory().enoughIngredients(mocha));
         assertEquals(coffeeMaker.makeCoffee(espresso, 50), 50); 
 
-        inventory.setChocolate(50);
-        inventory.setCoffee(50);
-        inventory.setSugar(50);
-        inventory.setMilk(50);
-        assertEquals(coffeeMaker.makeCoffee(mocha, 40), 10); 
+        inventory.setChocolate(100);
+        inventory.setCoffee(100);
+        inventory.setSugar(100);
+        inventory.setMilk(100);
+        assertEquals(coffeeMaker.makeCoffee(mocha, 60), 10); 
         assertEquals(coffeeMaker.makeCoffee(mocha, 50), 0);
-        assertEquals(coffeeMaker.makeCoffee(mocha, 55), 55);
+        assertEquals(coffeeMaker.makeCoffee(mocha, 55), 5);
+        
+        //all tests passed successfully
     }
 }
