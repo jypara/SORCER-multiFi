@@ -66,7 +66,7 @@ public class InventoryTest {
 
   // All tests run good after fixing bug in CoffeeMaker test 
     @Test
-    public void AddInventory(){
+    public void addInventory(){
         inventory.setChocolate(100);
         inventory.setCoffee(100);
         inventory.setSugar(100);
@@ -78,15 +78,11 @@ public class InventoryTest {
 
         coffeeMaker.makeCoffee(mocha, 50);
         assertEquals(coffeeMaker.checkInventory().getChocolate(), 100-mocha.getAmtChocolate()); // fixed bug inventory decreased after making purchase
-
-
-        inventory.setChocolate(0);
-        assertEquals(coffeeMaker.checkInventory().getChocolate(), 100);
     }
 
 
     @Test
-    public void CheckInventory(){
+    public void checkInventory(){
 
         inventory.setChocolate(100);
         inventory.setCoffee(100);
@@ -102,7 +98,7 @@ public class InventoryTest {
 
 
     @Test
-    public void PurchaseTest(){
+    public void purchaseCoffee(){
         inventory.setChocolate(0);
         inventory.setCoffee(0);
         inventory.setSugar(0);
@@ -120,7 +116,18 @@ public class InventoryTest {
         assertEquals(coffeeMaker.makeCoffee(mocha, 60), 10); 
         assertEquals(coffeeMaker.makeCoffee(mocha, 50), 0);
         assertEquals(coffeeMaker.makeCoffee(mocha, 55), 5);
-        
+
         //all tests passed successfully
+    }
+
+    /**
+    * Test purchase with negative
+    * there is no checking for negative price
+    * makeCoffee calculates the difference between amtPrice and beverage price
+    */
+    @Test
+    public void testPurchaseNegative() {
+
+        Assert.assertEquals(cm.makeCoffee(r1, -60), -60);
     }
 }

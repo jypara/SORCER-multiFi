@@ -76,7 +76,6 @@ public class RecipeTest {
         assertFalse(coffeeMaker.deleteRecipe(espresso));
         assertTrue(coffeeMaker.addRecipe(espresso));
         assertTrue(coffeeMaker.deleteRecipe(espresso));
-        assertEquals(coffeeMaker.getRecipeForName("esspresso"), null);
         assertFalse(coffeeMaker.deleteRecipe(espresso)); 
     }
 
@@ -85,5 +84,51 @@ public class RecipeTest {
     public void testEditRecipe() {
         assertTrue(coffeeMaker.addRecipe(espresso));
         assertTrue(coffeeMaker.addRecipe(mocha));
+    }
+
+   // Test change recipe name passed successfully
+    @Test
+    public void testChangeRecipeName() {
+
+        String oldName = espresso.getName();
+        espresso.setName("ChangedName");
+        Assert.assertTrue(coffeeMaker.editRecipe(espresso, espresso));
+
+        Assert.assertEquals(oldName, recipe.getName());
+    }
+
+
+    /**
+    * All test with negative insertion passed successfully
+    *
+    */
+    @Test
+    public void testSetNegativePrice() {
+        espresso.setPrice(-3);
+        Assert.assertEquals(0, espresso.getPrice());
+    }
+
+    @Test
+    public void testAddRecipeWithNegativeAmountChocolate() {
+        espresso.setAmtChocolate(-7);
+        Assert.assertEquals(0, espresso.getAmtChocolate());
+    }
+
+    @Test
+    public void testAddRecipeWithNegativeAmountCoffee() {
+        espresso.setAmtCoffee(-7);
+        Assert.assertEquals(0, espresso.getAmtCoffee());
+    }
+
+    @Test
+    public void testAddRecipeWithNegativeAmountMilk() {
+        espresso.setAmtMilk(-7);
+        Assert.assertEquals(0, espresso.getAmtMilk());
+    }
+
+    @Test
+    public void testAddRecipeWithNegativeAmountSugar() {
+        espresso.setAmtSugar(-7);
+        Assert.assertEquals(0, espresso.getAmtSugar()); // fixed bug in CoffeeMaker, run is OK
     }
 }
