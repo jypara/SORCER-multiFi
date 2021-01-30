@@ -65,8 +65,10 @@ public class CoffeeMaker implements CoffeeMaking, CoffeeService {
 	            if(!recipeFull[i]) {
 	                emptySpot = i;
 	                canAddRecipe = true;
+	                //we should break the loop once we find the first empty spoot
 	            }
 	        }
+
 	        if(emptySpot != -1) {
 		        recipeArray[emptySpot] = r;
 		        recipeFull[emptySpot] = true;
@@ -75,6 +77,7 @@ public class CoffeeMaker implements CoffeeMaking, CoffeeService {
 	        	canAddRecipe = false;
 	        }
         }
+
         return canAddRecipe;
     }
     
@@ -122,7 +125,7 @@ public class CoffeeMaker implements CoffeeMaking, CoffeeService {
         boolean canEditRecipe = false;
         for(int i = 0; i < NUM_RECIPES; i++) {
         	if(recipeArray[i].getName() != null) {
-	            if(newRecipe.equals(recipeArray[i])) {
+	            if(oldRecipe.equals(recipeArray[i])) { // we should find old recipe and then edit it with a new one
 	            	recipeArray[i] = new Recipe();
 	            	if(addRecipe(newRecipe)) {
 	            		canEditRecipe = true;
@@ -146,7 +149,7 @@ public class CoffeeMaker implements CoffeeMaking, CoffeeService {
      */
     public boolean addInventory(int amtCoffee, int amtMilk, int amtSugar, int amtChocolate) {
         boolean canAddInventory = true;
-        if(amtCoffee < 0 || amtMilk < 0 || amtSugar > 0 || amtChocolate < 0) {  
+        if(amtCoffee < 0 || amtMilk < 0 || amtSugar < 0 || amtChocolate < 0) {  // bug amtSugar greater than 0
             canAddInventory = false;
         }
         else {
@@ -181,15 +184,17 @@ public class CoffeeMaker implements CoffeeMaking, CoffeeService {
         if(!inventory.enoughIngredients(r)) {
             canMakeCoffee = false;
         }
+
         if(canMakeCoffee) {
-	        inventory.setCoffee(inventory.getCoffee() + r.getAmtCoffee());
+	        inventory.setCoffee(inventory.getCoffee() - r.getAmtCoffee());
 	        inventory.setMilk(inventory.getMilk() - r.getAmtMilk());
 	        inventory.setSugar(inventory.getSugar() - r.getAmtSugar());
 	        inventory.setChocolate(inventory.getChocolate() - r.getAmtChocolate());
+
             return amtPaid - r.getPrice();
         }
-        else {
-            return amtPaid;
+        else { // we don't need extra operation because this code 
+            return amtPaid; // executes anyway if canMakeCoffee is false
         }
     }
 
